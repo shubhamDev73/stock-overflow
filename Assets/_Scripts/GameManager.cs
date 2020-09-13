@@ -4,6 +4,8 @@ public static class GameManager {
 
 	public static float speed {get;} = 7f;
 	public static float smoothness {get;} = 0.9f;
+	public static float rotateSpeed {get;} = 0.4f;
+	public static float rotateSqrError {get;} = 30f;
 	public static float tileSize {get;} = 1f;
 
 	public static float ClampToTile (float n, float direction) {
