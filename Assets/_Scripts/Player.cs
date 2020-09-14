@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	private bool isRotating;
 	private Stock playerStock;
 	private List<Stock> attachedStocks = new List<Stock>();
+	private float prevGrab;
 
 	void Start () {
 
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour {
 		isRotating = false;
 		playerStock = GetComponent<Stock>();
 		Grab(playerStock);
+		prevGrab = 0f;
 
 	}
 
@@ -30,6 +32,15 @@ public class Player : MonoBehaviour {
 
 		if(Input.GetButtonDown("Grab"))
 			Grab(movement);
+
+		float grab = Input.GetAxis("Grab");
+		if(grab > GameManager.holdDuration && grab - prevGrab > GameManager.holdGap){
+			prevGrab = grab;
+			Grab(movement);
+		}
+
+		if(Input.GetButtonUp("Grab"))
+			prevGrab = 0f;
 
 		if(Input.GetButtonDown("Leave"))
 			Leave();

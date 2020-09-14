@@ -11,6 +11,9 @@ public static class GameManager {
 
 	public const float tileSize = 1f;
 
+	public const float holdDuration = 0.1f;
+	public const float holdGap = 0.1f;
+
 	public enum StockEdgeType {
 		Up, Down, Right, Left,
 	};
