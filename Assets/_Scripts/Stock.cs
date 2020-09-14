@@ -54,4 +54,11 @@ public class Stock : MonoBehaviour {
 
 	}
 
+	public void ResetAdjacentStocks () {
+
+		for(int i = 0; i < GameManager.totalEdges; i++)
+			adjacentStocks[i] = null;
+
+	}
+
 }

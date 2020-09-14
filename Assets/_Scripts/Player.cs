@@ -66,17 +66,19 @@ public class Player : MonoBehaviour {
 		if(isRotating) yield break;
 
 		isRotating = true;
-		Vector3 initial = transform.localEulerAngles;
+		Vector3 initial = transform.eulerAngles;
 		Vector3 final = initial + Vector3.up * 90 * direction;
 
 		while((final - initial).sqrMagnitude > GameManager.rotateSqrError){
 			initial = Vector3.Lerp(initial, final, GameManager.rotateSpeed);
-			transform.localEulerAngles = initial;
+			transform.eulerAngles = initial;
 			yield return new WaitForFixedUpdate();
 		}
 
-		transform.localEulerAngles = final;
+		transform.eulerAngles = final;
 		isRotating = false;
+		foreach(Stock attachedStock in attachedStocks)
+			attachedStock.ResetAdjacentStocks();
 
 	}
 
