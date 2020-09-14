@@ -5,10 +5,10 @@ public class StockEdge : MonoBehaviour {
 	public Stock stock;
 	public GameManager.StockEdgeType edgeType;
 
-	void OnTriggerEnter (Collider col) {
+	void OnTriggerStay (Collider col) {
 
 		Stock stock = col.GetComponent<Stock>();
-		if(stock == null) return;
+		if(!stock) return;
 		ChangeStock(stock);
 
 	}
@@ -16,12 +16,14 @@ public class StockEdge : MonoBehaviour {
 	void OnTriggerExit (Collider col) {
 
 		Stock stock = col.GetComponent<Stock>();
-		if(stock == null) return;
+		if(!stock) return;
 		ChangeStock(null);
 
 	}
 
 	void ChangeStock (Stock newStock) {
+
+		if(newStock == stock) return;
 
 		stock.adjacentStocks[(int)edgeType] = newStock;
 
