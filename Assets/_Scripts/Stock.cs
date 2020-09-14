@@ -8,13 +8,7 @@ public class Stock : MonoBehaviour {
 	public Stock[] adjacentStocks = new Stock[4]{null, null, null, null};
 
 	[HideInInspector]
-	public bool isAttached;
-
-	void Start () {
-
-		isAttached = false;
-
-	}
+	public bool isAttached = false;
 
 	public void Attach (Player player) {
 

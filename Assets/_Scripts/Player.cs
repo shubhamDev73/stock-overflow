@@ -38,8 +38,14 @@ public class Player : MonoBehaviour {
 
 	void Move (Vector2 movement) {
 
+		Vector3 initPos = position;
+
 		Vector3 direction = (Vector3.right * movement.x + Vector3.forward * movement.y).normalized;
 		position += direction * GameManager.speed * Time.deltaTime;
+
+		if(GetAdjacentStock(GetIndex(movement), true))
+			position = GameManager.ClampToTile(initPos, -direction);
+
 		Vector3 displacement = GameManager.ClampToTile(position, direction) - transform.position;
 		transform.Translate(displacement * (1 - GameManager.smoothness), Space.World);
 
