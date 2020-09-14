@@ -2,17 +2,19 @@
 
 public static class GameManager {
 
-	public static float speed {get;} = 7f;
-	public static float smoothness {get;} = 0.9f;
+	public const float speed = 7f;
+	public const float smoothness = 0.9f;
+	public const float movementThreshold = 0.0001f;
 
-	public static float rotateSpeed {get;} = 0.4f;
-	public static float rotateSqrError {get;} = 30f;
+	public const float rotateSpeed = 0.4f;
+	public const float rotateSqrError = 30f;
 
-	public static float tileSize {get;} = 1f;
+	public const float tileSize = 1f;
 
 	public enum StockEdgeType {
-		up, down, right, left
+		Up, Down, Right, Left,
 	};
+	public const int totalEdges = 4;
 
 	public static float ClampToTile (float n, float direction) {
 

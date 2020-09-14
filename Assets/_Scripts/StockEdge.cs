@@ -22,7 +22,6 @@ public class StockEdge : MonoBehaviour {
 	}
 
 	void ChangeStock (Stock newStock) {
-
 		if(newStock == stock) return;
 
 		stock.adjacentStocks[(int)edgeType] = newStock;

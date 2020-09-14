@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
 		Vector3 direction = (Vector3.right * movement.x + Vector3.forward * movement.y).normalized;
 		position += direction * GameManager.speed * Time.deltaTime;
 
-		if(GetAdjacentStock(GetIndex(movement), true))
+		if(GetAdjacentStock(movement, true))
 			position = GameManager.ClampToTile(initPos, -direction);
 
 		Vector3 displacement = GameManager.ClampToTile(position, direction) - transform.position;
@@ -51,12 +51,12 @@ public class Player : MonoBehaviour {
 
 	}
 
-	IEnumerator Rotate (float dir) {
+	IEnumerator Rotate (float direction) {
 		if(isRotating) yield break;
 
 		isRotating = true;
 		Vector3 initial = transform.localEulerAngles;
-		Vector3 final = initial + Vector3.up * 90 * dir;
+		Vector3 final = initial + Vector3.up * 90 * direction;
 
 		while((final - initial).sqrMagnitude > GameManager.rotateSqrError){
 			initial = Vector3.Lerp(initial, final, GameManager.rotateSpeed);
@@ -69,14 +69,11 @@ public class Player : MonoBehaviour {
 
 	}
 
-	void Grab (Vector2 dir) {
-
-		Grab(GetAdjacentStock(GetIndex(dir)));
-
+	void Grab (Vector2 direction) {
+		Grab(GetAdjacentStock(direction));
 	}
 
 	void Grab (Stock stock) {
-
 		if(!stock) return;
 
 		stock.Attach(this);
@@ -87,27 +84,26 @@ public class Player : MonoBehaviour {
 
 	}
 
-	int GetIndex (Vector2 dir) {
+	int GetIndex (Vector2 direction) {
+		if(direction.sqrMagnitude <= GameManager.movementThreshold) return -1;
 
-		int index = -1;
-
-		if(dir.sqrMagnitude > 0.0001f)
-			if(Mathf.Abs(dir.y) > Mathf.Abs(dir.x))
-				index = dir.y > 0 ? 0 : 1;
-			else
-				index = dir.x > 0 ? 2 : 3;
-
-		return index;
+		if(Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
+			return (int)((direction.y > 0) ? GameManager.StockEdgeType.Up : GameManager.StockEdgeType.Down);
+		else
+			return (int)((direction.x > 0) ? GameManager.StockEdgeType.Right : GameManager.StockEdgeType.Left);
 
 	}
 
-	Stock GetAdjacentStock (int index, bool directionOnly = false) {
+	Stock GetAdjacentStock (Vector2 direction, bool directionOnly = false) {
+		return GetAdjacentStock(GetIndex(direction), directionOnly);
+	}
 
+	Stock GetAdjacentStock (int index, bool directionOnly = false) {
 		if(directionOnly && index < 0) return null;
 
 		foreach(Stock attachedStock in attachedStocks){
 			if(index == -1){
-				for(int i = 0; i < 4; i++){
+				for(int i = 0; i < GameManager.totalEdges; i++){
 					Stock stock = attachedStock.adjacentStocks[i];
 					if(stock && !stock.isAttached)
 						return stock;
