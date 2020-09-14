@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -494,7 +494,7 @@ PrefabInstance:
     - target: {fileID: 7550490238857296727, guid: c4fa50f228f0d964cb9f4aa570ee3905,
         type: 3}
       propertyPath: m_Name
-      value: TopEdge
+      value: UpEdge
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4fa50f228f0d964cb9f4aa570ee3905, type: 3}
